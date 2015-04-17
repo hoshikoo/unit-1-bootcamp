@@ -1,11 +1,13 @@
 
 import com.javafx.tools.doclets.formats.html.SourceToHTMLConverter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 
 /**
@@ -78,6 +80,58 @@ public class DataStructures
 
         System.out.println(canRentACar(podMap));
 
+        //    wordsWithoutList({"a", "bb", "b", "ccc"}, 1) → {"bb", "ccc"}
+        ArrayList <String> testAl = new ArrayList<String>();
+        testAl.add("a");
+        testAl.add("bb");
+        testAl.add("b");
+        testAl.add("ccc");
+
+        System.out.println(wordsWithoutList(testAl, 1));
+
+        //    wordsWithoutList({"a", "bb", "b", "ccc"}, 3) → {"a", "bb", "b"}
+        System.out.println(wordsWithoutList(testAl, 3));
+
+        //    wordsWithoutList({"a", "bb", "b", "ccc"}, 4) → {"a", "bb", "b", "ccc"}
+
+        System.out.println(wordsWithoutList(testAl, 4));
+
+
+        //    countClumps({1, 2, 2, 3, 4, 4}) → 2
+        ArrayList <Integer> testAlTwo = new ArrayList<Integer>();
+        testAlTwo.add(1);
+        testAlTwo.add(2);
+        testAlTwo.add(2);
+        testAlTwo.add(3);
+        testAlTwo.add(4);
+        testAlTwo.add(4);
+
+        System.out.println("countClumps: "+ countClumps(testAlTwo));
+
+        //    countClumps({1, 1, 2, 1, 1}) → 2
+        ArrayList <Integer> testAlThree = new ArrayList<Integer>();
+        testAlThree.add(1);
+        testAlThree.add(1);
+        testAlThree.add(2);
+        testAlThree.add(1);
+        testAlThree.add(1);
+
+        System.out.println("countClumps 2: "+ countClumps(testAlThree));
+
+        //    countClumps({1, 1, 1, 1, 1}) → 1
+
+        ArrayList <Integer> testAlFour= new ArrayList<Integer>();
+        testAlFour.add(1);
+        testAlFour.add(1);
+        testAlFour.add(1);
+        testAlFour.add(1);
+        testAlFour.add(1);
+
+        System.out.println("countClumps 2: "+ countClumps(testAlFour));
+
+
+        sortingSentences("my name is hoshiko oki");
+        sortingSentences("How to sort an arraylist of objects java?");
     }
 
     public static boolean canRentACar(HashMap<String, Integer> hm){
@@ -152,7 +206,6 @@ public class DataStructures
         return "the most frequent element in ArrayList is "+ getKeysFromValueString(wordCount,
                                                                                     maxValue)+" : number of occurrences is "+maxValue;
 
-
     }
 
     public static String getKeysFromValueString(HashMap <String, Integer>hm,Integer value){
@@ -164,4 +217,113 @@ public class DataStructures
         return null;
     }
 
+
+//    5. wordsWithoutList
+//    Given an array of strings and an integer, write a method that return
+//    a an ArrayList where all the strings of the given length are omitted.
+//
+
+    public static ArrayList <String> wordsWithoutList(ArrayList<String> al, int n){
+            ArrayList<String> words = new ArrayList<String>();
+            for (String word : al){
+                if(word.length() == n) {
+                }else{
+                    words.add(word);
+                }
+            }
+        return words;
+    }
+
+
+
+//    6. How many clumps?
+//    Say that a "clump" in an ArrayList is a series of 2 or more adjacent elements of
+//    the same value. Write a method that returns the number of clumps in the given ArrayList.
+//    countClumps({1, 2, 2, 3, 4, 4}) → 2
+//    countClumps({1, 1, 2, 1, 1}) → 2
+//    countClumps({1, 1, 1, 1, 1}) → 1
+
+    public static int countClumps(ArrayList<Integer> al){
+       // HashMap<Integer, Integer>hm = new HashMap<Integer, Integer>();
+        //ArrayList<Integer> keysOfHm = new ArrayList<Integer>(hm.keySet());
+
+//        for (Integer n : al){
+//            int count;
+////            count = hm.get(n);
+////            System.out.println(n);
+//            if(count != null){
+//                count++;
+//
+//            }else{
+//                count=1;
+//            }
+//            hm.put(n, count+1);
+//        }
+//        System.out.println(hm);
+//
+//        int clumpCount=0;
+//
+//        for (int i = 0; i<hm.size();i++){
+//            int n2 = hm.get(i);
+//            if(n2>=2){
+//                clumpCount++;
+//            }
+//        }
+//
+//        return clumpCount;
+
+        int clumpCount=0;
+        int currentNum;
+        int nextNum;
+        int pastNum;
+
+            for(int i=0; i< (al.size())-1 ; i++){
+
+                currentNum = al.get(i);
+                nextNum = al.get(i+1);
+
+                //System.out.println("currentNum: "+currentNum+" nextNum: "+nextNum);
+                if(i>0){
+                    pastNum = al.get(i-1);
+                    if(pastNum!=currentNum && currentNum==nextNum){
+
+                        if(clumpCount==0){
+                            clumpCount =1;
+                        }else{
+                            clumpCount++;
+                        }
+                    }
+                 }else if (currentNum==nextNum){
+
+                    if(clumpCount==0){
+                        clumpCount =1;
+                    }else{
+                        clumpCount++;
+                    }
+                }
+            }
+        return clumpCount;
+    }
+
+
+//    7. Sorting sentences
+//    Write a method that takes a String sentence, breaks it up into
+//    an ArrayList of Strings (one word per ArrayList element), and
+//    prints out the words in alphabetical order.
+
+    public static void sortingSentences(String str){
+        ArrayList<String> stringList = new ArrayList<String>();
+        Scanner scanner = new Scanner(str.toLowerCase());
+        while(scanner.hasNext()) {
+            String word = scanner.next();
+            stringList.add(word);
+        }
+
+        Collections.sort(stringList);
+
+        for(String word:stringList){
+            System.out.println(word);
+        }
+
+    }
 }
