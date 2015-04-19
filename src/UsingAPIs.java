@@ -1,7 +1,12 @@
+import com.stripe.Stripe;
+import com.stripe.model.Customer;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.HashMap;
 
 /**
  * Created by alexandraqin on 4/14/15.
@@ -26,6 +31,7 @@ public class UsingAPIs {
       {
           e.printStackTrace();
       }
+
 
   }
 
@@ -55,4 +61,6 @@ public class UsingAPIs {
         return hs.size();
 
     }
+
+
 }
